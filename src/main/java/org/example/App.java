@@ -67,7 +67,7 @@ public class App {
         String updatedMessage = tutorialService.updateTutorial(updatedTutorial);
         System.out.println(updatedMessage);
 
-        // Trying to update tutorial with a invalid ID
+        // Trying to update a tutorial with invalid ID
 
         Tutorial updatedTutorialWithInvalidID = new Tutorial();
         updatedTutorialWithInvalidID.setId(Long.MAX_VALUE);
