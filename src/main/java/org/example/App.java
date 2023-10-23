@@ -46,9 +46,9 @@ public class App {
         String deletedMessage = tutorialService.deleteTutorialById(2);
         System.out.println(deletedMessage);
 
-        // Trying to delete a tutorial by an invalid ID
+        // Trying to delete a tutorial with invalid ID
 
-        System.out.println("\n\nTrying to delete a tutorial by an invalid ID");
+        System.out.println("\n\nTrying to delete a tutorial with invalid ID");
         System.out.println("--------------------------------------------");
         String deletedMessage2 = tutorialService.deleteTutorialById(Long.MAX_VALUE);
         System.out.println(deletedMessage2);
@@ -67,7 +67,7 @@ public class App {
         String updatedMessage = tutorialService.updateTutorial(updatedTutorial);
         System.out.println(updatedMessage);
 
-        // Trying to update a tutorial by an invalid ID
+        // Trying to update tutorial with a invalid ID
 
         Tutorial updatedTutorialWithInvalidID = new Tutorial();
         updatedTutorialWithInvalidID.setId(Long.MAX_VALUE);
@@ -76,7 +76,7 @@ public class App {
         updatedTutorialWithInvalidID.setPublished(true);
         updatedTutorialWithInvalidID.setPublishedDate(new Date());
 
-        System.out.println("\n\nTrying to update a tutorial by an invalid ID");
+        System.out.println("\n\nTrying to update a tutorial with invalid ID");
         System.out.println("--------------------------------------------");
         String updatedMessage2 = tutorialService.updateTutorial(updatedTutorialWithInvalidID);
         System.out.println(updatedMessage2);
@@ -88,9 +88,9 @@ public class App {
         Tutorial tutorial = tutorialService.getTutorialById(1);
         System.out.println(tutorial.getTitle());
 
-        // Try to retrieve a tutorial by an invalid ID
+        // Trying to retrieve a tutorial with invalid ID
 
-        System.out.println("\n\nTry to retrieve a tutorial by an invalid ID");
+        System.out.println("\n\nTrying to retrieve a tutorial with invalid ID");
         System.out.println("--------------------------------------------");
         Tutorial tutorialWithInvalidID = tutorialService.getTutorialById(Long.MAX_VALUE);
         if (tutorialWithInvalidID == null) {
