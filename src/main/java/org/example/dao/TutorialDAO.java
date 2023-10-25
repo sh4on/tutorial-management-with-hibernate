@@ -74,12 +74,7 @@ public class TutorialDAO {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             try {
-                String queryHQL = "FROM Tutorial WHERE id = :id";
-
-                Query<Tutorial> query = session.createQuery(queryHQL, Tutorial.class);
-                query.setParameter("id", id);
-
-                tutorial = query.uniqueResult();
+                tutorial = tutorial = session.get(Tutorial.class, id);
             } catch (HibernateException e) {
                 System.err.println(e.getMessage());
             }

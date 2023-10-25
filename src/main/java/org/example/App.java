@@ -88,6 +88,7 @@ public class App {
         Tutorial tutorial = tutorialService.getTutorialById(1);
         System.out.println(tutorial.getTitle());
 
+
         // Trying to retrieve a tutorial with invalid ID
 
         System.out.println("\n\nTrying to retrieve a tutorial with invalid ID");
