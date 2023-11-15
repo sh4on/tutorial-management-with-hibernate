@@ -4,6 +4,7 @@ import org.example.dao.TutorialDAO;
 import org.example.model.Tutorial;
 import org.example.service.TutorialService;
 import org.example.service.impl.TutorialServiceImpl;
+import org.example.util.HibernateUtil;
 
 import java.util.Date;
 
@@ -113,5 +114,6 @@ public class App {
         for (Tutorial tut : tutorialService.getAllTutorials()) {
             System.out.println(tut.getTitle());
         }
+
     }
 }
