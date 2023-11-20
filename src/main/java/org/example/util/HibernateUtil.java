@@ -5,7 +5,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateUtil {
+final public class HibernateUtil {
     private static final SessionFactory SESSION_FACTORY;
 
     private HibernateUtil() {
@@ -20,17 +20,12 @@ public class HibernateUtil {
 
         try {
             Configuration configuration = new Configuration();
-            // Load Hibernate configuration from hibernate.cfg.xml
             configuration.configure();
             configuration.addAnnotatedClass(Tutorial.class);
 
             sessionFactory = configuration.buildSessionFactory();
         } catch (HibernateException e) {
-            // Handle any exceptions that occur during SessionFactory creation
-            System.err.println("SessionFactory creation failed: " + e.getMessage());
             e.printStackTrace();
-
-            // Exit the application in case of failure
             System.exit(1);
         }
 

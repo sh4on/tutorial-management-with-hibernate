@@ -6,14 +6,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TutorialDAO {
 
     // Save a Tutorial entity to the database.
-    public String saveTutorial(Tutorial tutorial) {
-        String message;
+    public boolean saveTutorial(Tutorial tutorial) {
+        boolean tutorialSavedSuccessfully = false;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             try {
@@ -21,27 +20,25 @@ public class TutorialDAO {
                 session.persist(tutorial);
                 session.getTransaction().commit();
 
-                message = String.format("Tutorial with ID %d Saved successfully.", tutorial.getId());
+                tutorialSavedSuccessfully = true;
             } catch (HibernateException e) {
-                message = e.getMessage();
+                e.printStackTrace();
             }
         }
 
-        return message;
+        return tutorialSavedSuccessfully;
     }
 
     // Retrieve all Tutorial entities from the database.
     public List<Tutorial> getAllTutorials() {
-        List<Tutorial> tutorials = new ArrayList<>();
+        List<Tutorial> tutorials = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             try {
-                String queryHQL = "from Tutorial";
-                Query<Tutorial> query = session.createQuery(queryHQL, Tutorial.class);
-
+                Query<Tutorial> query = session.createQuery("from Tutorial", Tutorial.class);
                 tutorials = query.list();
             } catch (HibernateException e) {
-                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -50,18 +47,18 @@ public class TutorialDAO {
 
     // Retrieve all published Tutorial entities from the database.
     public List<Tutorial> getAllPublishedTutorials() {
-        List<Tutorial> tutorials = new ArrayList<>();
+        List<Tutorial> tutorials = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             try {
-                String queryHQL = "FROM Tutorial WHERE isPublished = :p ";
+                String queryHQL = "FROM Tutorial WHERE isPublished = :status";
 
                 Query<Tutorial> query = session.createQuery(queryHQL, Tutorial.class);
-                query.setParameter("p", true);
+                query.setParameter("status", true);
 
                 tutorials = query.list();
             } catch (HibernateException e) {
-                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -69,14 +66,14 @@ public class TutorialDAO {
     }
 
     // Retrieve a Tutorial entity by its ID.
-    public Tutorial getTutorialById(long id) {
+    public Tutorial getTutorialById(Long id) {
         Tutorial tutorial = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             try {
-                tutorial = tutorial = session.get(Tutorial.class, id);
+                tutorial = session.get(Tutorial.class, id);
             } catch (HibernateException e) {
-                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -84,36 +81,36 @@ public class TutorialDAO {
     }
 
     // Update a Tutorial entity in the database.
-    public String updateTutorial(Tutorial updateTutorial) {
-        String message;
+    public boolean updateTutorial(Tutorial updatedTutorial) {
+        boolean tutorialUpdatedSuccessfully = false;
 
-        if (getTutorialById(updateTutorial.getId()) == null) {
-            message = String.format("No tutorial found with ID no. %d to update.", updateTutorial.getId());
-            return message;
+        if (getTutorialById(updatedTutorial.getTutorialID()) == null) {
+            System.err.println(String.format("No tutorial found with ID no. %d to update.", updatedTutorial.getTutorialID()));
+            return tutorialUpdatedSuccessfully;
         }
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             try {
                 session.beginTransaction();
-                session.merge(updateTutorial);
+                session.merge(updatedTutorial);
                 session.getTransaction().commit();
 
-                message = String.format("Tutorial with ID %d updated successfully.", updateTutorial.getId());
+                tutorialUpdatedSuccessfully = true;
             } catch (HibernateException e) {
-                message = e.getMessage();
+                e.printStackTrace();
             }
         }
 
-        return message;
+        return tutorialUpdatedSuccessfully;
     }
 
     // Delete a Tutorial entity by its ID.
-    public String deleteTutorialById(long id) {
-        String message;
+    public boolean deleteTutorialById(Long id) {
+        boolean tutorialDeletedSuccessfully = false;
 
         if (getTutorialById(id) == null) {
-            message = String.format("No tutorial found with ID no. %d to delete.", id);
-            return message;
+            System.err.println(String.format("No tutorial found with ID no. %d to delete.", id));
+            return tutorialDeletedSuccessfully;
         }
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -122,12 +119,12 @@ public class TutorialDAO {
                 session.remove(getTutorialById(id));
                 session.getTransaction().commit();
 
-                message = String.format("Tutorial with ID %d deleted successfully.", id);
+                tutorialDeletedSuccessfully = true;
             } catch (Exception e) {
-                message = e.getMessage();
+                e.printStackTrace();
             }
         }
 
-        return message;
+        return tutorialDeletedSuccessfully;
     }
 }

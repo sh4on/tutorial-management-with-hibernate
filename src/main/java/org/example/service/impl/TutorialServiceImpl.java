@@ -10,12 +10,12 @@ public class TutorialServiceImpl implements TutorialService {
 
     private TutorialDAO tutorialDAO;
 
-    public TutorialServiceImpl(TutorialDAO tutorialDAO) {
-        this.tutorialDAO = tutorialDAO;
+    {
+        tutorialDAO = new TutorialDAO();
     }
 
     @Override
-    public String addTutorial(Tutorial tutorial) {
+    public boolean addTutorial(Tutorial tutorial) {
         return tutorialDAO.saveTutorial(tutorial);
     }
 
@@ -30,25 +30,17 @@ public class TutorialServiceImpl implements TutorialService {
     }
 
     @Override
-    public Tutorial getTutorialById(long id) {
+    public Tutorial getTutorialById(Long id) {
         return tutorialDAO.getTutorialById(id);
     }
 
     @Override
-    public String updateTutorial(Tutorial tutorial) {
+    public boolean updateTutorial(Tutorial tutorial) {
         return tutorialDAO.updateTutorial(tutorial);
     }
 
     @Override
-    public String deleteTutorialById(long id) {
+    public boolean deleteTutorialById(Long id) {
         return tutorialDAO.deleteTutorialById(id);
-    }
-
-    public TutorialDAO getTutorialDAO() {
-        return tutorialDAO;
-    }
-
-    public void setTutorialDAO(TutorialDAO tutorialDAO) {
-        this.tutorialDAO = tutorialDAO;
     }
 }
