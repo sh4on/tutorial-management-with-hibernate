@@ -107,8 +107,9 @@ public class TutorialDAO {
     // Delete a Tutorial entity by its ID.
     public boolean deleteTutorialById(Long id) {
         boolean tutorialDeletedSuccessfully = false;
+        Tutorial tutorial = getTutorialById(id);
 
-        if (getTutorialById(id) == null) {
+        if (tutorial == null) {
             System.err.println(String.format("No tutorial found with ID no. %d to delete.", id));
             return tutorialDeletedSuccessfully;
         }
@@ -116,7 +117,7 @@ public class TutorialDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             try {
                 session.beginTransaction();
-                session.remove(getTutorialById(id));
+                session.remove(tutorial);
                 session.getTransaction().commit();
 
                 tutorialDeletedSuccessfully = true;
